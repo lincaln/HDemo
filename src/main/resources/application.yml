@@ -1,0 +1,110 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /card
+  tomcat:
+    uri-encoding: utf-8
+
+#debug: true
+
+spring:
+#devtools热部署
+  #devtools:
+    #restart:
+      #enabled: true  #设置开启热部署
+  #freemarker:
+    #cache: false    #页面不加载缓存，修改即时生效
+  #profiles:
+   ## active: default
+    
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/card?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    #username: root
+    #password: root
+    url: jdbc:mysql://192.168.1.201:3306/mall?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456!qazW
+    
+    # Druid配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    #<!-- 配置初始化大小、最小、最大 -->
+    initialSize: 0
+    minIdle: 1
+    maxActive: 20
+    #<!-- 配置获取连接等待超时的时间 -->
+    maxWait: 60000
+    #<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    timeBetweenEvictionRunsMillis: 60000
+    #<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    #<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+  hasMall: true
+  redis:
+    host: 192.168.1.208
+    port: 6379
+    password: ''
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 1
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: com.emt.card.config.MysqlConfig #类的全类名
+
+wx:
+  miniapp:
+    appId: wxb1a1fc6f7727920d
+    secret: 52d97d76e1dadcf0e8c7660120a7cf06
+    token:
+    aesKey:
+    msgDataFormat: JSON
+    mchId: 1505658981
+    mchKey: 21232F297A57A5A743894A0E4A801FC3
+    orderPayTempleId: NW7-vdmiLFx_0ZAe-BLoBZBE2-W_oj-bEUvsBlRq60M
+    orderSubmitTempleId: e-GLBrrtc0OW-B9ykAauOGlIxpon3s3xXWFSE16gkiA
+    orderCancelTempleId: GJsNxR6D3KxrPBl-EabO8SLZ5Y829J0Lzt5H35B6TFg
+    refundSuccessTempleId: jQQ3s5uv01RneZ-jOaaJh_b8OzJKEI8076z8wljYOno
+    pemUrl: /home/apiclient_cert.p12
+  mp:
+    appId: wxdbd54f103230b4bd
+    secret: 99816eee94f0482268adea9b48a2af0c
+    pcAppId: wx365eb298af9b6596
+    pcSecret: 48ac81548a5527274263658f858ac8d9
+---
+spring:
+  profiles: test
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: ''
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.1.201:3306/mall?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456!qazW
+    pathname: /home/service_file/
+
+---
+spring:
+  profiles: prod
+  redis:
+    host: 127.0.0.1
+    port: 6937
+    password: Vv665599
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/mall?autoReconnect=true&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456!qazW
+    pathname: /home/service_file/
+
